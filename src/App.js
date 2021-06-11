@@ -43,20 +43,21 @@ class BooksApp extends React.Component {
 
   render() {
     const { history } = this.props;
+    const books = this.state.books;
     return (
       <div className="app">
         {/* Routes */}
         <Switch>
           <Route exact path="/">
             <div>
-              <BookList books={this.state.books} handleMoveTo={this.handleMoveTo}/>
+              <BookList books={books} handleMoveTo={this.handleMoveTo}/>
               <div className="open-search">
                 <Link to="/search" className="button_search">Add a book</Link>
               </div>
             </div>
           </Route>
           <Route path="/search">
-            <SearchPage history={history}/>
+            <SearchPage books={books} history={history}/>
           </Route>
         </Switch>
       </div>

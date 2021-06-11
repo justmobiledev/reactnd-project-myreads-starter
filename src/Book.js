@@ -8,7 +8,12 @@ class Book extends React.Component {
 
         this.title = this.props.book.title;
         this.authors = first(this.props.book.authors);
-        this.coverImageURL = `url(${this.props.book.imageLinks.smallThumbnail})`;
+        let coverImageURL = `url()`;
+        if (this.props.book.imageLinks && this.props.book.imageLinks.smallThumbnail) {
+            coverImageURL = `url(${this.props.book.imageLinks.smallThumbnail})`;
+        }
+        this.coverImageURL = coverImageURL;
+  
         this.shelf = this.props.book.shelf;
 
         this.handleMoveTo = this.handleMoveTo.bind(this);

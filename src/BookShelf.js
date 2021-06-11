@@ -15,6 +15,7 @@ class BookShelf extends React.Component {
     }
 
     render() {
+        const books = this.props.books;
         return (
             <div>
                 <div className="bookshelf">
@@ -24,9 +25,9 @@ class BookShelf extends React.Component {
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {
-                            !isEmpty(this.props.books) ? this.props.books.map((book, index) => (
-                                <Book key={index} book={book} handleMoveTo={this.handleMoveTo}/>
-                            )) : null
+                            !isEmpty(books) && books.map((book) => (
+                                <Book key={book.id} book={book} handleMoveTo={this.handleMoveTo}/>
+                            ))
                         }
                     </ol>
                 </div>

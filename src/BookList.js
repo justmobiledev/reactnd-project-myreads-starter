@@ -2,7 +2,6 @@ import React from 'react'
 import BookShelf from './BookShelf'
 
 class BookList extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -15,9 +14,9 @@ class BookList extends React.Component {
 
     render() {
         // Create lists of each book shelf
-        const currentlyReadingList = this.props.books.filter((book) => book.shelf === 'currentlyReading') || [];
-        const wantToReadList = this.props.books.filter((book) => book.shelf === 'wantToRead') || [];
-        const readList = this.props.books.filter((book) => book.shelf === 'read') || [];
+        const currentlyReadingList = this.props.books.filter((book) => book.shelf === 'currentlyReading');
+        const wantToReadList = this.props.books.filter((book) => book.shelf === 'wantToRead');
+        const readList = this.props.books.filter((book) => book.shelf === 'read');
 
         return (
             <div className="list-books">    
