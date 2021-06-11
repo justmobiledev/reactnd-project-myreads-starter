@@ -3,22 +3,26 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchPage from './SearchPage'
 import BookList from './BookList'
+import {Switch, Route, Link} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
     books: []
+  }
+
+  onRouteChanged(){
+    this.refreshBookList();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.onRouteChanged();
+    }
   }
 
   refreshBookList = () => {
     BooksAPI.getAll().then((res) => {
-      console.log(res);
       this.setState({books: res});
     }).catch((error) => {
       alert('An error occurred retrieving books from the server. Please check your network connection and try again');
@@ -38,22 +42,26 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const { history } = this.props;
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-         <SearchPage />
-        ) : (
-          <div>
-            <BookList books={this.state.books} handleMoveTo={this.handleMoveTo}/>
-             
-            <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+        {/* Routes */}
+        <Switch>
+          <Route exact path="/">
+            <div>
+              <BookList books={this.state.books} handleMoveTo={this.handleMoveTo}/>
+              <div className="open-search">
+                <Link to="/search" className="button_search">Add a book</Link>
+              </div>
             </div>
-          </div>
-        )}
+          </Route>
+          <Route path="/search">
+            <SearchPage history={history}/>
+          </Route>
+        </Switch>
       </div>
     )
   }
 }
 
-export default BooksApp
+export default withRouter(BooksApp)
